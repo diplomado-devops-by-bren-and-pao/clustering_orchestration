@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio 3-Tier Docker</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 60px;
+            background-color: #f4f6f8;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            min-width: 420px;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #555;
+        }
+
+        .environment {
+            display: inline-block;
+            margin: 15px 0;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .environment.development {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .environment.production {
+            background-color: #d1e7dd;
+            color: #0f5132;
+        }
+
+        .environment.unknown {
+            background-color: #e2e3e5;
+            color: #41464b;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #mensaje {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #28a745;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+
+        <h1>Arquitectura Three-Tier con Docker</h1>
+
+        <!-- Ambiente actual -->
+        <div id="environment" class="environment unknown">
+            Cargando ambiente...
+        </div>
+
+        <p>
+            Presiona el botón para consultar el Backend y la Base de Datos:
+        </p>
+
+        <button onclick="obtenerSaludo()">
+            Obtener Saludo
+        </button>
+
+        <div id="mensaje">
+            ---
+        </div>
+
+    </div>
+
+    <script>
+
+        function cargarAmbiente() {
+            fetch('/api/config')
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('No se pudo obtener la configuración');
+                    }
+
+                    return res.json();
+                })
+                .then(data => {
+                    const environment = data.environment || 'default';
+
+                    const element = document.getElementById('environment');
+
+                    element.innerText =
+                        `AMBIENTE: ${environment.toUpperCase()}`;
+
+                    element.className = 'environment';
+
+                    if (environment.toLowerCase() === 'production') {
+                        element.classList.add('production');
+                    } else if (environment.toLowerCase() === 'development') {
+                        element.classList.add('development');
+                    } else {
+                        element.classList.add('unknown');
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+
+                    const element = document.getElementById('environment');
+
+                    element.innerText = 'AMBIENTE: DEFAULT';
+                    element.className = 'environment unknown';
+                });
+        }
+        function obtenerSaludo() {
+
+            fetch('/api/saludo')
+                .then(res => {
+
+                    if (!res.ok) {
+                        throw new Error('Error en la respuesta del backend');
+                    }
+
+                    return res.json();
+                })
+                .then(data => {
+
+                    document.getElementById('mensaje').innerText =
+                        data.mensaje || JSON.stringify(data);
+                })
+                .catch(error => {
+
+                    console.error(error);
+
+                    document.getElementById('mensaje').innerText =
+                        'Error al conectar con el backend';
+                });
+        }
+
+
+        // Cargar el ambiente automáticamente al abrir la página.
+        cargarAmbiente();
+
+    </script>
+
+</body>
+</html>
