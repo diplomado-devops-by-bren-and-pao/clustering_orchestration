@@ -3,3 +3,16 @@ kind: Service
 metadata:
   name: saludos-frontend
   namespace: brendisas
+  labels:
+    app: saludos
+    component: frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: saludos
+    component: frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP

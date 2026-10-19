@@ -3,3 +3,12 @@ kind: ConfigMap
 metadata:
   name: saludos-config
   namespace: brendisas
+  labels:
+    app: saludos
+    component: backend
+data:
+  DB_HOST: "saludos-postgres.cwpiwkuea2hm.us-east-1.rds.amazonaws.com"
+  DB_PORT: "5432"
+  DB_NAME: "saludos"
+  APP_ENV: development
+  

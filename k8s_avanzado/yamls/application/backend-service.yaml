@@ -3,3 +3,16 @@ kind: Service
 metadata:
   name: saludos-backend
   namespace: brendisas
+  labels:
+    app: saludos
+    component: backend
+spec:
+  type: ClusterIP
+  selector:
+    app: saludos
+    component: backend
+  ports:
+    - name: http
+      port: 5000
+      targetPort: 5000
+      protocol: TCP
