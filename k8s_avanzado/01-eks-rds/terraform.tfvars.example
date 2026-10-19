@@ -1,0 +1,26 @@
+# IDs de recursos de red EXISTENTES. No se crearán ni modificarán por este proyecto.
+vpc_id = "vpc-0f7e884f168e5d607"
+private_subnet_ids = [
+  "subnet-0163f0f24282a7c93",
+  "subnet-0c4c780fe3c8f98c8"
+]
+public_subnet_ids = [
+  "subnet-0b7a0758619dfefc0",
+  "subnet-0ec143982b26ecbf1"
+]
+internet_gateway_id = "igw-060b7b577e5f45c6f"
+nat_gateway_id      = "nat-04b3c4a1c81af3090"
+
+# Opcional: grupos de seguridad existentes, compatibles con los nodos EKS y dentro de la misma VPC.
+# Déjalo vacío si no necesitas añadir reglas adicionales.
+additional_node_security_group_ids = []
+
+# Sustituye por la IP pública desde la que administrarás EKS, por ejemplo ["203.0.113.10/32"].
+cluster_endpoint_public_access_cidrs = ["190.27.74.29/32"]
+
+rds_secret_name = "dev/DB_PASS_1"
+
+db_security_group_id     = "sg-05a8690695d147e52"
+db_identifier            = "saludos-postgres"
+db_name                  = "saludos"
+db_instance_class        = "db.t3.micro"
