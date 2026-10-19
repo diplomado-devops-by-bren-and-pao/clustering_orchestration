@@ -77,6 +77,8 @@ module "eks" {
   endpoint_public_access_cidrs = var.cluster_endpoint_public_access_cidrs
 
   enable_cluster_creator_admin_permissions = true
+  create_cloudwatch_log_group = false
+  enabled_log_types           = []
 
   addons = {
     coredns = {}
@@ -104,8 +106,6 @@ module "eks" {
         workload    = "general"
         environment = "development"
       }
-
-      vpc_security_group_ids = [data.aws_security_group.db.id]
     }
   }
 

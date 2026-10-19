@@ -2,49 +2,5 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: saludos-backend
-  namespace: saludos-dev
-  labels:
-    app: saludos
-    component: backend
-    environment: development
-  annotations:
-    description: "Deployment del backend de Saludos"
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: saludos
-      component: backend
-  template:
-    metadata:
-      labels:
-        app: saludos
-        component: backend
-    spec:
-      nodeSelector:
-        environment: development
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              app: saludos
-              component: backend
-      containers:
-        - name: backend
-          image: REEMPLAZAR_POR_URI_ECR/saludos-backend:1.0
-          ports:
-            - containerPort: 5000
-          envFrom:
-            - configMapRef:
-                name: saludos-db-config
-            - secretRef:
-                name: saludos-db-secret
-          resources:
-            requests:
-              cpu: "100m"
-              memory: "128Mi"
-            limits:
-              cpu: "500m"
-              memory: "256Mi"
+  namespace: brendisas
+  

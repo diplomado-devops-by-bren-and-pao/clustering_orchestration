@@ -71,7 +71,7 @@ variable "cluster_endpoint_public_access_cidrs" {
 variable "node_instance_types" {
   description = "Tipos de instancia para los nodos administrados."
   type        = list(string)
-  default     = ["t3.micro"]
+  default     = ["t3.medium"]
 }
 
 variable "node_count" {

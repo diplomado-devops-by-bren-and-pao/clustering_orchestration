@@ -2,17 +2,4 @@ apiVersion: v1
 kind: Service
 metadata:
   name: saludos-backend
-  namespace: saludos-dev
-  labels:
-    app: saludos
-    component: backend
-spec:
-  type: ClusterIP
-  selector:
-    app: saludos
-    component: backend
-  ports:
-    - name: http
-      port: 5000
-      targetPort: 5000
-      protocol: TCP
+  namespace: brendisas
